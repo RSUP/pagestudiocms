@@ -1,0 +1,47 @@
+// --------------------------------------------------------------
+// Color Glossary - needs updating
+// --------------------------------------------------------------
+// Dark gray (text):            #333333
+
+// --------------------------------------------------------------
+// Font stack
+// --------------------------------------------------------------
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,300italic,300);
+
+// --------------------------------------------------------------
+// Custom variables 
+// --------------------------------------------------------------
+$white: #FFF;
+$black: #1A1A1A;
+$black-medium: #282826;
+$charcoal: #282826; 
+$charcoal-medium: #2A2A2A;
+// $gray: #C2C2C2;
+$gray-medium: #EBEBEB; 
+$gray-dimmed: #FAFAFA;
+// $gray-light: #FDFDFD;
+
+$brand-primary-medium: #293134 !default;
+$brand-link-color: $brand-primary-medium !default; // processewire pink - #EB315F
+
+$dark-border-color: #ccc;
+$light-border-color: #d9d9d9;
+$dark-bg: #464646;              // 
+
+$sidebar-width: 200px;          // Sidebar width
+$sidebar-bg-color: #2F4050;     // $sidebar-bg-color: #F3F6FB;
+
+$vertical-menu-bg-color: #293134; // Left primary menu
+$vertical-menu-link-active-color: $black;
+
+$menu-panel-width: 250px;
+$menu-panel-bg-color: #FAFAFA;
+$menu-panel-border-color: #E5E5E5;
+
+$workspace-header-height: 0px; // Menu height, and workspace top-margin
+$options-pane-width: 260px;
+$workspace-background: #F7F7F7;
+
+// --------------------------------------------------------------
+// Bootstrap variables are found in bootstrap/_variables.scss
+// --------------------------------------------------------------

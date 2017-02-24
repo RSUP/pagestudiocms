@@ -1,0 +1,17 @@
+.smk-alert {
+    border: 0;
+    color: #FFF;
+    @include background-opacity($black, .80);
+}
+.alert-success.smk-alert{
+    border-top: 4px solid $alert-success-border;
+}
+.alert-warning.smk-alert{
+    border-top: 4px solid $alert-warning-border;
+}
+.alert-danger.smk-alert{
+    border-top: 4px solid $alert-danger-border;
+}
+.alert-info.smk-alert{
+    border-top: 4px solid $alert-info-border;
+}

@@ -1,0 +1,101 @@
+/*---------------------------------------------------------------
+ 0.0.0 User profile page
+---------------------------------------------------------------*/
+/* Profile container */
+.profile {
+    margin: 20px 0;
+
+    // Profile sidebar 
+    .profile-sidebar {
+        padding: 20px 0 10px 0;
+        background: #fff;
+        BORDER: 1px solid $gray-lighter;
+    }
+
+    .profile-userpic img {
+        float: none;
+        margin: 0 auto;
+        width: 50%;
+        max-width: 100px;
+        height: 50%;
+        @include border-radius(50%);
+    }
+    .profile-usertitle {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .profile-usertitle-name {
+        color: #5a7391;
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .profile-usertitle-job {
+        text-transform: uppercase;
+        color: #1A1A1A; // Blue: #5B9BD1
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .profile-userbuttons {
+        text-align: center;
+        margin-top: 10px;
+
+        .btn {
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 15px;
+            margin-right: 5px;
+
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+
+    .profile-usermenu {
+        margin-top: 30px;
+        
+        ul li {
+            border-bottom: 1px solid #f0f4f7;
+
+            &:last-child {
+                border-bottom: none;
+            }
+            a {
+                color: #93a3b5;
+                font-size: 14px;
+                font-weight: 400;
+                
+                i {
+                    margin-right: 8px;
+                    font-size: 14px;
+                }
+                &:hover {
+                    background-color: #fafcfd;
+                    color: #1A1A1A;
+                }
+            }
+            &.active {
+                border-bottom: none;
+                a {
+                    color: #1A1A1A;
+                    background-color: #f6f9fb;
+                    border-left: 2px solid #1A1A1A;
+                    margin-left: -2px;
+                }
+            }
+        }
+    }
+    
+    // Profile Content
+    .profile-content {
+        padding: 20px;
+        background: #fff;
+        min-height: 460px;
+    }
+}   

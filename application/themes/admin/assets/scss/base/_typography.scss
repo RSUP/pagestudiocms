@@ -1,11 +1,4 @@
 
-a {
-	color: $color-2;
-	text-decoration: none;
+a, a.current, a.active, a:active {
+    outline: 0 !important;
 }
-
-// a, a:visited {
-  // color: $link-color;
-  // text-decoration: none;
-  // outline: none;
-// }

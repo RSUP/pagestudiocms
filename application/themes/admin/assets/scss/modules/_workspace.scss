@@ -1,0 +1,245 @@
+/*
+ * #Breadcrumb
+ */
+.workspace {
+    header {
+        top: 0px;
+        height: $workspace-header-height;
+        background-color: #FCFCFC;
+    }
+    > header, 
+    > footer {
+        left: 79px;
+        position: absolute;
+        right: 0px;
+        z-index: 8;
+    }
+}
+
+.workspace {
+  .content-header {
+    position: relative;
+    padding: 25px 15px 20px 20px;
+    border-bottom: 1px solid #EBEBEB;
+    @include box-shadow(0px, 5px, 8px, 0px, rgba(229, 229, 229, 0.2)); // #E5E5E5
+    > h1 {
+      margin: 0;
+      font-size: 18px;
+      > small {
+        font-size: 14px;
+        font-weight: 300;
+        display: block;
+        padding-left: 40px;
+      }
+    }
+    > .breadcrumb {
+      float: right;
+      font-size: 12px;
+      background: transparent;
+      margin-top: 10px;
+      margin-bottom: 0;
+      padding: 7px 5px;
+      position: absolute;
+      top: 15px;
+      right: 10px;
+      @include border-radius(2px);
+    }
+    > .content-header--button-space {
+      float: right;
+      position: absolute;
+      top: 25px;
+      right: 15px;
+    }
+  }
+  
+  .canvas {
+    &.padded {
+      padding: 20px;
+    }
+  }
+}
+
+.workspace .content-header > .breadcrumb > li {
+    > a {
+        color: #444;
+        text-decoration: none;
+        > {
+            .fa, .glyphicon, .ion {
+                margin-right: 5px;
+            }
+        }
+    }
+    + li:before {
+        content: '>\00a0';
+    }
+}
+@media screen and (max-width: 767px) {
+  .workspace .content-header > .breadcrumb {
+    position: relative;
+    margin-top: 5px;
+    top: 0;
+    right: 0;
+    float: none;
+    background: #ddd;
+  }
+}
+
+/*
+ * #Left pane
+ */ 
+.main_panes {
+    > .left-pane {        
+        position: absolute;
+        top: 0px;
+        left: 60px;
+        right: 0px;
+        width: 0px;
+        height: 100%;  
+        background-color: #fafafa;
+        border-right: 1px solid #ebebeb;
+        z-index: 1;
+        
+        // -----------------------------
+        // #Left pane with scrollable
+        // -----------------------------
+        > .scrollable {
+            padding-top: 4px;
+            position: absolute;
+            top: 52px;
+            right: 0px;
+            bottom: 0px;
+            width: 0px;
+            min-height:320px;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+    }
+    
+    // ----------------------------
+    // #Middle workspace
+    // ----------------------------
+    > .edit-pane {  
+        position: absolute;
+        top: $workspace-header-height;
+        left: 80px;
+        right:0px;
+        bottom: 0px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: lighten($gray, 65.5%); // #FCFCFC 
+        z-index: 1;
+        
+        .page-editor-iframe-container {
+            margin: 10px 10px 10px 15px;
+            background-color: #f4f4f4; 
+            border: 1px solid #ddd;
+            @include box-shadow(0, 2px, 10px, rgba(199, 199, 199, .6));
+        }
+    }
+    
+    // ----------------------------
+    // #right pane
+    // ----------------------------
+    > .options-pane {
+        padding: 20px 10px 10px 10px;
+        width: 0px;
+        position: absolute;
+        top: $workspace-header-height;
+        bottom: 0px;
+        right: 0px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: lighten($gray, 65.5%); // #FCFCFC
+        border-left: 1px solid #ebebeb;
+    }
+}
+
+
+/*--------------------------------------------------------------
+ Off Canvas
+ Gives us the push menu effect
+--------------------------------------------------------------*/
+/*
+ * #Open left-pane
+ */
+.workspace.open-left-pane {
+    .left-pane { 
+        right: 310px;
+        width: 270px; 
+    }
+    > .scrollable { 
+        top: 0px;
+        width: 270px; 
+    }
+    .edit-pane { 
+        left: 330px; 
+    }     
+    header { left:330px; }
+    footer.footer { left:330px; }
+}
+/*
+ * #Open options-pane
+ */
+.workspace.open-options-pane .edit-pane { right: $options-pane-width; }  
+.workspace.open-options-pane .options-pane { 
+    width: $options-pane-width; 
+    .upload-modal-toggle-link {
+        width: 195px;
+        height: 195px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #fff;
+    }
+    
+    // Buttons
+    .page-action-buttons {
+        > .btn {
+            padding: 4px 15px;
+            font-size: 12px;
+            width: 90px;
+            &:last-child {
+                float: right;
+            }
+        }
+        margin-bottom: 15px;
+    }
+    
+    // Form 
+    form {
+        input, textarea {
+            &.form-control {
+                color: $gray;
+                font-size: 12px;
+                @include border-radius(0);
+                padding: 4px 10px;
+            }
+        }
+    }
+    
+    // Tabs
+    .page-tabs {
+        li {
+            font-size: 12px;
+            > a {
+                color: lighten($gray, 10%);
+                padding: 5px 8px;
+            }
+            &.active {
+                > a {
+                }
+            }
+            &:last-child {
+                float: right;
+            }
+        }
+        .tab-content {
+            font-size: 12px;
+            padding: 25px 4px;  
+        }
+    }
+}
+/*
+ * Collapse options-pane
+ */
+.workspace.collapse-options-pane .edit-pane { right: 0px }  
+.workspace.collapse-options-pane .options-pane { width: 0px; }

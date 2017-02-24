@@ -1,11 +1,16 @@
-@import "header";
-
-@import "sidebar";
-
-@import "canvas";
-
-@import "forms";
-
-@import "ui";
+.wrapper {
+    min-height: 100%;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    bottom: 0px;
+    
+    &:before,
+    &:after {
+        display: table;
+        content: " ";
+        clear: both;
+    }
+}
 
 @import "footer";

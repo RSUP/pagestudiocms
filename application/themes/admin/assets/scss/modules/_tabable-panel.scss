@@ -1,0 +1,103 @@
+/*---------------------------------------------------------------
+  Tabs panel
+---------------------------------------------------------------*/
+.tabbable-panel {
+  border:1px solid #eee;
+  padding: 0;
+    
+    /* Default mode */
+    .tabbable-line {
+        padding: 10px;
+        > .nav-tabs {
+            border: none;
+            margin: 0px;
+            > li {
+                margin-right: 2px;
+                > a {
+                    color: #737373;
+                    margin-right: 0;
+                    border: 0;
+                    outline: 0;
+                    i {
+                        color: #a6a6a6;
+                    }
+                }
+                &.open, 
+                &.tabbable-line > .nav-tabs > li:hover {
+                    border-bottom: 4px solid #fbcdcf;
+                }
+                &.open > a, 
+                &.tabbable-line > .nav-tabs > li:hover > a {
+                    border: 0;
+                    background: none !important;
+                    color: #333333;
+                }
+                &.open > a > i, 
+                &.tabbable-line > .nav-tabs > li:hover > a > i {
+                    color: #a6a6a6;
+                }
+                &.open .dropdown-menu, 
+                &.tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+                    margin-top: 0px;
+                }
+                &.active {
+                  border-bottom: 4px solid #f3565d;
+                  position: relative;
+                    > a {
+                      border: 0;
+                      color: #333333;
+                        > i {
+                          color: #404040;
+                        }
+                    }
+                }
+            }
+        }
+        > .tab-content {
+            margin-top: -3px;
+            background-color: #fff;
+            border: 0;
+            border-top: 1px solid #eee;
+            padding: 15px 0;
+            &.no-top-border {
+                border-top: 0px;
+            }
+        }
+        
+        /* Below tabs mode */
+        .tabs-below > .nav-tabs > li {
+            border-top: 4px solid transparent;
+            > .nav-tabs {
+                > li {
+                    > a {
+                        margin-top: 0;
+                    } 
+                    &:hover {
+                        border-bottom: 0;
+                        border-top: 4px solid #fbcdcf;
+                    }
+                    &.active {
+                        margin-bottom: -2px;
+                        border-bottom: 0;
+                        border-top: 4px solid #f3565d;
+                    }
+                }
+            }
+        }
+        .tabs-below > .tab-content {
+            margin-top: -10px;
+            border-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+    
+    }
+    .tabbable-footer {
+        margin:0;
+        padding: 0px 10px 10px 10px;
+    }
+}
+
+.portlet .tabbable-line > .tab-content {
+    padding-bottom: 0;
+}

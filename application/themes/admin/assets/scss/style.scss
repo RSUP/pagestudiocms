@@ -1,103 +1,130 @@
-@import 'variables'; // colors, fonts etc...
+/**
+ * Main application styles
+ *
+ * This file contains all the elements needed to change the 
+ * appearance of the app. 
+ *
+ * @project   <http://pagestudioapp.com> 
+ * @version   0.1.1
+ * @package   xhtml-css
+ * @author    Cosmo Mathieu <http://cosmointeractive.co> 
+ * @copyright 2015 <http://cosmointeractive.co>
+ * @file      style.css
+ * @css-for   IE 9+, Safari 4+, Firefox 3+
+ * 
+ * --------------------------------------------------------------
+ * Table of Contents
+ * --------------------------------------------------------------
+ * 1.0 - Reset
+ * 
+ * 
+ * --------------------------------------------------------------
+ * Color Glossary - needs updating
+ * --------------------------------------------------------------
+ * Dark gray (text):            #333333
+ * transition: all 0.5s ease-in-out 0s;
+ */ 
+// --------------------------------------------------------------
+// Sass file Imports
+// --------------------------------------------------------------
+@import "helpers/_variables";   // Custom Sass variables
+@import "helpers/_bootstrap";   // Bootstrap overrides
+@import "helpers/_mixins";   // Custom Sass variables
+@import "vendors/bootstrap/_bootstrap";   // Bootstrap defaults
+@import "vendors/matthieua-sass-css3-mixins/_css3-mixins.scss"; // Mixins  
 
-// @import "vendors/bootstrap/bootstrap";
+@import "base/base";
 
-@import 'vendors/bourbon/bourbon'; // http://bourbon.io/ 
+@import "components/base";
 
-@import 'vendors/css3-mixins/css3-mixins'; // custom mixins
+@import "layout/base";
 
-@import 'modules/base';
+// --------------------------------------------------------------
+// Main panes and navigation
+// --------------------------------------------------------------
+@import "modules/workspace";
 
-// @import 'vendors/bourbon-bootstrap-grid/base'; // https://gist.github.com/johnkoht/6405117
+// --------------------------------------------------------------
+// #Footer icons
+// --------------------------------------------------------------
+@import "layout/footer";
 
-@import 'helpers/mixins'; // custom mixins
+// --------------------------------------------------------------
+// Side menu panels
+// --------------------------------------------------------------
+@import "modules/menu"; 
 
-@import "base/base"; // Reset, base font etc...
+@import "modules/dashboard"; 
 
-@import 'layout/base'; // Sections of the app that do not change
+//---------------------------------------------------------------
+// Tabs panel
+//---------------------------------------------------------------
+@import "modules/tabable-panel";
 
-@import 'components/base'; 
+//---------------------------------------------------------------
+// Gallery module
+//---------------------------------------------------------------
+@import "modules/gallery";
 
-@import 'pages/base';
+//---------------------------------------------------------------
+// 8.2.1 Fullscreen modal
+//---------------------------------------------------------------
+@import "modules/modals";
+
+//---------------------------------------------------------------
+// 0.0.0 User profile page
+//---------------------------------------------------------------
+@import "modules/users";
+
+//---------------------------------------------------------------
+// Page-Level Plugin - Tables
+//---------------------------------------------------------------	
+@import url("plugins/dataTables/dataTables.bootstrap.css");
+@import url("plugins/tagsinput/bootstrap-tagsinput.css");
+@import url("plugins/jquery-ui/jquery-ui.min.css");
+
+//---------------------------------------------------------------	
+// Tables
+//---------------------------------------------------------------
+@import "modules/tables";
+
+//---------------------------------------------------------------
+// Alerts
+//---------------------------------------------------------------
+@import "components/alerts";
+
+// ---------------------------------------------------------------
+// 8.2.1 Utility classes
+// ---------------------------------------------------------------
+
+/* Rotate counter-clockwise 90 degrees */
+.rotate {
+    @include transform(rotate(-90deg));
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);  // Internet Explorer
+}
+
+.bg-white {
+    background: #ffffff;
+    background-color: #ffffff;
+}
+.bg-grey {
+    background: #FCFCFC;
+    background-color: #FCFCFC;
+}
+
+/**
+ * !Hack - Fix for TinyMCE fullscreen 
+ */
+.mce-fullscreen {
+    #main_navigation,
+    .workspace,
+    .workspace > header,
+    .left-pane,
+    .footer {
+        z-index: 0;
+    }
+}
 
 .border {
-  border: 1px solid #F00;
+    border: 1px solid #F00 !important;
 }
-
-a {
-  img {
-    border: 0;
-  }
-}
-
-.fleft {
-  float: left;
-}
-
-.fright {
-  float: right;
-}
-
-.align_center {
-  text-align: center;
-}
-
-.label_highlight {
-  color: #ABADB3;
-}
-
-.item_hidden {
-  font-size: 10px;
-  font-style: italic;
-  color: #003A88;
-}
-
-// Clearfix 
-
-.clearfix {
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
-  display: inline-block;
-}
-* html .clearfix {
-  height: 1%;
-}
-.clearfix {
-  display: block;
-}
-
-.clear {
-  @extend .clearfix;
-}
-
-// Panel 
-
-.panel {
-  width: 100%;
-  min-height: 200px;
-  margin: 0px 0px 30px;
-  padding: 20px;
-  background: #FFF none repeat scroll 0% 0%;
-  border-radius: 3px;
-  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.09);
-  border: 1px solid $widget-border-color;
-  img {
-    width: 100%;
-    height: auto;
-  }
-}
-
-// Code Mirror gutter fix
-// When z-index is applied it shows above the sidebar child menu items
-.CodeMirror-gutter {
-  z-index: 0 !important;
-}
-
-// Matrix fields 
-@import url('matrix.css'); 
