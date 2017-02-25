@@ -7,6 +7,46 @@
   }
 }
 
+// ---------------------------------------------------------------
+// upload button 
+// ---------------------------------------------------------------
+.drag-drop-upload-btn {
+  // max-width: 180px;
+  color: $gray;
+  text-decoration: none;     
+  &:hover {
+    .drag-drop-upload-btn__inner {
+      border-color: $gray;
+    }
+    i, span {
+      color: $charcoal;
+      text-decoration: none;
+    }
+  }
+  .drag-drop-upload-btn__inner {
+    width: 180px;
+    height: 180px;
+    // margin: 10px;
+    text-align: center;        
+    border: 3px dashed #999;
+    &:hover {
+      border-color: $gray;
+      @include box-shadow(0, 10px, 3px, rgba(85, 85, 85, 0.2), 0);
+    }
+    i {
+      padding-top: 70px;
+      color: $gray;
+      &.upload-link {
+        font-size: 38px;
+        padding-top: 60px;
+      }
+    }
+    span {
+      font-size: 12px;
+    }            
+  }
+}
+
 //------------------------------------------------------------------------------------
 // Square Buttons 
 //------------------------------------------------------------------------------------

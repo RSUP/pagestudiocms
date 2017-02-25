@@ -20,6 +20,19 @@ class Galleries_model extends DataMapper
             'join_other_as' => 'image',
         ),
     );
+    
+    public function get_albums()
+    {
+        return ci()->db->select('
+            galleries.id,
+            galleries.title,
+            gallery_images.filename cover
+        ')
+        ->from('galleries')->join('gallery_images', 'gallery_images.gallery_id = galleries.id', 'left')
+        ->group_by('gallery_images.gallery_id')
+        ->get()
+        ->result();
+    }
 
     function sync_db()
     {

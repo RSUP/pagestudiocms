@@ -22,7 +22,7 @@ class Images extends Admin_Controller
         $data = array();
         $gallery_id = $this->uri->segment(5);
         $data['breadcrumb'] = set_crumbs(array('galleries' => 'Galleries', current_url() => 'Images'));
-        $this->template->add_package('tablednd'); 
+        $this->template->add_package('fancybox');
         $data['Gallery'] = $Gallery = $this->load->model('galleries_model');
 
         $Gallery->get_by_id($gallery_id);
@@ -210,38 +210,40 @@ class Images extends Admin_Controller
     
     // -------------------------------------------------------------------
 
+    /**
+     * Ajax method to update image sort order 
+     * 
+     * @return  void
+     */
     public function order()
     {
         // Order images
         if (is_ajax())
         {
-            if(count($_POST) > 0 && $this->input->post('image_table'))
-            {
-                $this->load->model('gallery_images_model');
+            $result      = new Service_result(); // Setup our Ajax service for responses
+            $data        = [];
+            $order       = 1;
+            $status      = true;
 
-                $table_order = $this->input->post('image_table');
-
-                unset($table_order[0]);
-                $table_order = array_values($table_order);
-
-                $i = 1;
-                foreach($table_order as $id)
-                {
-                    $Sort_images = new Gallery_images_model();
-                    $Sort_images->get_by_id($id);
-                    $Sort_images->sort = $i;
-                    $Sort_images->save();
-                    unset($Sort_images);
-
-                    $i++;
-                }
+            $image_order = $this->input->post('image_order');            
+            $image_order = explode('&', str_replace('order=', '',$image_order));            
+            foreach ($image_order as $id){
+                $data[] = ['id' => $id, 'sort' => $order];
+                $order++;
             }
+            ci()->db->update_batch('gallery_images', $data, 'id'); // 'code' is where key
 
-            return;
+            $message            = ($status) ? 'Changes saved' : 'Unable to save changes';
+            $result->message    = $message;
+            $result->result     = json_encode($status);
+            $result->status     = ($status) ? 'success' : 'error';
+
+            header("Content-Type: application/json");
+            echo json_encode($result);
         }
         else
         {
-            return show_404();
+            show_error('As of version 1.3.0 only ajax calls are allowed to this method.');
         }
     }
     

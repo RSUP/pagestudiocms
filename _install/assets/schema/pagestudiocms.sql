@@ -280,6 +280,7 @@ DROP TABLE IF EXISTS `galleries`;
 CREATE TABLE IF NOT EXISTS `galleries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
+  `album_cover` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
@@ -288,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `galleries` (
 --
 
 INSERT INTO `galleries` (`id`, `title`) VALUES
-(1, 'Featured');
+(1, 'Featured', NULL);
 
 -- --------------------------------------------------------
 

@@ -175,10 +175,10 @@ $packages = array(
     ),
     'fancybox' => array(
         'javascript' => array(
-            '/application/themes/admin/assets/js/fancybox/jquery.fancybox-1.3.4.pack.js',
+            '/application/themes/admin/assets/js/fancybox/jquery.fancybox.min.js',
         ),
         'stylesheet' => array(
-            '/application/themes/admin/assets/js/fancybox/jquery.fancybox-1.3.4.css',
+            '/application/themes/admin/assets/js/fancybox/jquery.fancybox.min.css',
         ),
     ),
     'nestedSortable' => array(
@@ -312,6 +312,8 @@ define('ADMIN_ACCESS_OPTIONS', serialize($admin_access_options));
 |
 */
 define('ADMIN_NO_IMAGE', '/application/themes/admin/assets/images/no_image.jpg');
+
+define('ADMIN_NO_IMAGE_2', '/application/themes/admin/assets/img/no_image_350x350.jpg');
 
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */

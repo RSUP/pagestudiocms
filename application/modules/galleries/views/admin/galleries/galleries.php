@@ -12,98 +12,56 @@
                 <?php echo isset($breadcrumb) ? $breadcrumb : ''; ?>
             </ol>
         </section>
-        
-        <br />                            
-        <div class="hidden">
-            <?php echo form_open(null, 'id="form"'); ?>
-            <table class="list">
-                <thead>
-                    <tr>
-                        <th width="1" class="center"><input type="checkbox" onClick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
-                        <th class="sortable">Title</th>
-                        <th class="right">#ID</th>
-                        <th class="right">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($Galleries->exists()): ?>
-                        <?php foreach($Galleries as $Gallery):?>
-                        <tr>
-                            <td class="center"><input type="checkbox" value="<?php echo $Gallery->id ?>" name="selected[]" /></td>
-                            <td><?php echo $Gallery->title; ?></td>
-                            <td class="right"><?php echo $Gallery->id; ?></td>
-                            <td class="right">[ <a href="<?php echo site_url(ADMIN_PATH . '/galleries/edit/' . $Gallery->id) ?>">Rename</a> ] [ <a href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Gallery->id) ?>">Edit</a> ]</td>
-                        </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr>
-                            <td class="center" colspan="4">No galleries have been added.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-            <?php echo form_close(); ?>
-        </div>
-        
-        <div class="row" style="padding:25px 25px">
-                        
-            <div class="js-sortable-gallery">
-            
-                <?php echo form_open(null, 'id="form"'); ?>
-                
-                    <?php if ($Galleries->exists()): ?>
-                        <?php foreach($Galleries as $Gallery):?>
-                        <div style="max-width: 250px;" class="col-md-3 col-sm-6 col-xs-12">
-                            <div class="gal-img-container">
-                              <div class="gal-img-option">
-                                <ul class="list-options">
-                                  <li><a href="#" 
-                                        data-album-id="<?php echo $Gallery->id; ?>"
-                                        data-album-title="<?php echo $Gallery->title; ?>" class="js-rename-album">
-                                        <i class="fa fa-pencil"></i> <span>Rename</span></a></li>
-                                  <li></li>
-                                  <li><a href="#" data-album-id="<?php echo $Gallery->id; ?>" class="js-delete-album"><i class="fa fa-trash"></i> <span>Delete</span></a></li>
-                                </ul>
-                              </div>
-                              <div class="gal-image">
-                                <a href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Gallery->id) ?>" 
-                                    class="img-group-gallery cboxElement" title="<?php echo $Gallery->title; ?>">
-                                    <img src="https://placehold.it/250x200" class="img-responsive" alt="<?php echo $Gallery->title; ?>">
-                                </a>
-                              </div>
-                                <!--
-                                <div class="post-meta">
-                                    <ul class="list-meta list-inline">
-                                      <li><i class="fa fa-camera"></i> 117</li>
-                                    </ul>
-                                </div> 
-                                -->
-                              <div class="gal-img-desc">
-                                <i class="fa fa-tags"></i> <?php echo $Gallery->title; ?>
-                              </div>
-                            </div>
-                        </div><!--/ image -->
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <!-- No galleries have been added. -->
-                    <?php endif; ?>
-        
-                <?php echo form_close(); ?>
-
-                <div style="max-width: 250px;" class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="upload-modal-toggle">
-                        <a href="#" class="js-create-album">
-                            <div class="upload-modal-toggle-link">
-                                <i class="pe-7s-plus upload-link"></i><br />
-                                <span>Click to Create Album</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-            </div><!-- sortable -->
-        
     
+        <div class="row" style="padding:35px 25px">
+        
+            <ul id="sortable">
+            <?php if ( ! empty($Galleries)): ?>
+                <?php foreach($Galleries as $Gallery):?>
+                <li data-gallery-image-id="<?php echo $Gallery->id ?>">
+                    <div class="gal-img-container">
+                      <div class="gal-img-option">
+                        <ul class="list-options">
+                          <li><a href="#" 
+                                data-album-id="<?php echo $Gallery->id; ?>"
+                                data-album-title="<?php echo $Gallery->title; ?>" class="js-rename-album">
+                                <i class="fa fa-pencil"></i> <span>Rename</span></a></li>
+                          <li></li>
+                          <li><a href="#" data-album-id="<?php echo $Gallery->id; ?>" class="js-delete-album"><i class="fa fa-trash"></i> <span>Delete</span></a></li>
+                        </ul>
+                      </div>
+                      <div class="gal-image">
+                        <a href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Gallery->id) ?>" 
+                            class="img-group-gallery cboxElement" title="<?php echo $Gallery->title; ?>">
+                            <img src="<?php echo gallery_image_thumb( site_url($Gallery->cover) ); ?>" class="img-responsive" alt="<?php echo $Gallery->title; ?>">
+                        </a>
+                      </div>
+                        <!--
+                        <div class="post-meta">
+                            <ul class="list-meta list-inline">
+                              <li><i class="fa fa-camera"></i> 8</li>
+                            </ul>
+                        </div> 
+                        -->
+                      <div class="gal-img-desc">
+                        <i class="fa fa-tags"></i> <?php echo $Gallery->title; ?>
+                      </div>
+                    </div>
+                </li><!--/ image -->
+                <?php endforeach; ?>
+            <?php else: ?>
+                <!-- No galleries have been added. -->
+            <?php endif; ?>
+                <li class="ui-state-disabled">                
+                    <a href="#" class="drag-drop-upload-btn js-create-album">
+                        <div class="drag-drop-upload-btn__inner">
+                            <i class="pe-7s-plus upload-link"></i><br />
+                            <span>Click to Create Album</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+            
         </div><!-- end padding -->
     </div><!-- end edit-pane -->
 </div>
@@ -159,8 +117,6 @@
 <?php js_start(); ?>
 <script type="text/javascript">
     $(document).ready(function() {
-        
-        $('.js-sortable-gallery').sortable({placeholder: "ui-state-highlight",helper:'clone'});
         
         // Modal launcher 
         $('.js-create-album').on('click', function(){

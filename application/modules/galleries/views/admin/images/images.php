@@ -13,22 +13,12 @@
             </ol>
         </section>
         
-        <div class="row" style="padding:35px 25px 25px">
+        <div class="row" style="padding:35px 25px 25px">       
         
-            <div class="js-gallery-container">
-            <?php echo form_open(null, 'id=form'); ?>
+            <ul id="sortable">
                 <?php if ($Images->exists()): ?>
                     <?php foreach($Images as $Image):?>
-                    <!--
-                    <tr id="<?php echo $Image->id; ?>">
-                        <td class="drag_handle"></td>
-                        <td class="center"><input type="checkbox" value="<?php echo $Image->id; ?>" name="selected[]" /></td>
-                        <td><?php echo $Image->title; ?> <?php if($Image->hide): ?> (Hidden)<?php endif; ?></td>
-                        <td><img src="<?php echo image_thumb($Image->filename, 250, 200, true); ?>" /></td>
-                        <td class="right">[ <a href="<?php echo site_url(ADMIN_PATH . '/galleries/images/edit/'.$Image->id); ?>">Edit</a> ]</td>
-                    </tr>
-                    -->
-                    <div style="max-width: 250px;" class="col-md-3 col-sm-6 col-xs-12">
+                    <li class="js-sortable-enabled" data-sort-id="<?php echo $Image->id ?>">
                         <div class="gal-img-container">
                           <div class="gal-img-option">
                             <ul class="list-options">
@@ -50,8 +40,8 @@
                             </ul>
                           </div>
                           <div class="gal-image">
-                            <a href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Image->id) ?>" 
-                                class="img-group-gallery cboxElement" title="<?php echo $Image->title; ?>">
+                            <a href="<?php echo site_url($Image->filename) ?>" data-fancybox="gallery" data-caption="<?php echo $Image->title; ?>" 
+                                class="img-group-gallery cboxElement" title="<?php echo $Image->title; ?>" >
                                 <img src="<?php echo image_thumb($Image->filename, 250, 200, true); ?>" class="img-responsive" alt="<?php echo $Image->title; ?>">
                             </a>
                           </div>
@@ -59,24 +49,20 @@
                             <i class="fa fa-tags"></i> <?php echo $Image->title; ?>
                           </div>
                         </div>
-                    </div><!--/ image -->
+                    </li><!--/ image -->
                     <?php endforeach; ?>
                 <?php else: ?>
                     <!-- No images have been added. -->
                 <?php endif; ?>
-            <?php echo form_close(); ?>
-            </div>
-            
-            <div style="max-width: 250px;" class="col-md-3 col-sm-6 col-xs-12">
-                <div class="upload-modal-toggle">
-                    <a id="add_image" href="javascript:void(0);">
-                        <div class="upload-modal-toggle-link">
+                <li class="ui-state-disabled">                
+                    <a href="#" id="add_image" class="drag-drop-upload-btn">
+                        <div class="drag-drop-upload-btn__inner">
                             <i class="pe-7s-up-arrow upload-link"></i><br />
-                            <span>Upload Image</span>
+                            <span>Click to Add Image</span>
                         </div>
                     </a>
-                </div>
-            </div>
+                </li>
+            </ul>
 
         </div><!-- end padding -->
     </div><!-- end edit-pane -->
@@ -214,22 +200,38 @@
 <script type="text/javascript">
     $(document).ready(function() {
         
-        $('.js-sortable-gallery').sortable({placeholder: "ui-state-highlight",helper:'clone'});
+        $( "#sortable" ).sortable({
+            placeholder: "ui-state-highlight",
+            items: "li:not(.ui-state-disabled)",
+            update: function (event, ui) {
+                var data = $( "#sortable" ).sortable('serialize', {
+                    attribute: 'data-sort-id',//this will look up this attribute
+                    key: 'order',//this manually sets the key
+                    expression: /(.+)/ //expression is a RegExp allowing to determine how to split the data in key-value. In your case it's just the value
+                });
 
-        initDnD = function() {
-            // Sort images (table sort)
-            $('#image_table').tableDnD({
-                onDrop: function(table, row) {
-                    show_status('Saving...', false, true);
-                    order = $('#image_table').tableDnDSerialize()
-                    $.post('<?php echo site_url(ADMIN_PATH . '/galleries/images/order') ?>', order, function() {
-                        show_status('Saved', true, false);
-                    } );
-                },
-                dragHandle: "drag_handle"
-            });
-        }
-        initDnD();
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo site_url(ADMIN_PATH . '/galleries/images/order') ?>',
+                    data: {"image_order": data},
+                    dataType:'JSON', 
+                    success: function(response){
+                        if(response.length !== ''){
+                            // console.log(response.status, response.result, response.message);
+                            if(response.status == 'success'){
+                                $.smkAlert({ text: response.message, type: 'success', time: true });
+                            } else {
+                                $.smkAlert({ text: response.message, type: 'danger', permanent: true });
+                            }
+                        } else {                
+                            // console.log(response.status, response.message);
+                            $.smkAlert({ text: 'Unable to communicate with the server', type:'danger', permanent: true });
+                        }
+                    }
+                });
+            }
+        });
+        $( "#sortable" ).disableSelection();
 
         // KCFinder add images
         $('#add_image').click( function() {

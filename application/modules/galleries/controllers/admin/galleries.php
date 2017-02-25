@@ -15,14 +15,18 @@ class Galleries extends Admin_Controller
         parent::__construct();
     }
 
-    function index()
+    public function index()
     {
+        // $this->load->helper('gallery_helper');
+        include_once APPPATH . 'modules/galleries/helpers/gallery_helper.php';
+        
         $data = array();
         $data['breadcrumb'] = set_crumbs(array(current_url() => 'Galleries'));
         $Galleries = $this->load->model('galleries_model');
 
         // Get data from db
-        $data['Galleries'] = $Galleries->get();
+        // $data['Galleries'] = $Galleries->get();
+        $data['Galleries'] = $Galleries->get_albums();
 
         $this->template->view('admin/galleries/galleries', $data);
     }
