@@ -2,19 +2,19 @@
  * Image gallery styles
 ---------------------------------------------------------------*/
 .gal-img-container {
-    position:relative;
-    width:auto;
-    height:auto;
-    overflow:hidden;
-    margin:0 0 30px;
-    padding:0;
-    border:1px solid #ebebeb;
-    @include box-shadow(0, 1px, 10px, 3px, rgba(85, 85, 85, .1)); // #555555
-    &:hover > .gal-img-option {
-        @include opacity(1);
-        @include transition(all .3s ease-in-out);  
-        @include transform(translateY(0));
-    }
+  position:relative;
+  width:auto;
+  height:auto;
+  overflow:hidden;
+  margin:0 0 30px;
+  padding:0;
+  border:1px solid #ebebeb;
+  @include box-shadow(0, 1px, 10px, 3px, rgba(85, 85, 85, .1)); // #555555
+  &:hover > .gal-img-option {
+    @include opacity(1);
+    @include transition(all .3s ease-in-out);  
+    @include transform(translateY(0));
+  }
 }
 .gal-img-option {
     position:absolute;
@@ -49,8 +49,14 @@
 }
 
 .post-meta {
-  background-color: #fff;
-  padding: 15px;
+  background-color: rgba(0,0,0,0.1);
+  padding: 10px 15px 6px;
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  width: 215px;
+  margin-left: 1px;
+  margin-right: 2px;
   .list-meta {
     font-size: 12px;
     line-height: 14px;

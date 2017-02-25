@@ -38,9 +38,12 @@ class Images extends Admin_Controller
         $_SESSION['KCFINDER'] = array();
         $_SESSION['KCFINDER']['disabled'] = false;
         $_SESSION['isLoggedIn'] = true;
-
+        
+        $this->template->add_package(array('ckeditor', 'ck_jq_adapter'));
         $this->template->view('admin/images/images', $data);
     }
+    
+    // -------------------------------------------------------------------
 
     function add()
     {
@@ -73,81 +76,141 @@ class Images extends Admin_Controller
             return show_404();
         }
     }
+    
+    // -------------------------------------------------------------------
 
-    function edit()
+    /**
+     * This method is only used by Ajax callers. It attempts to update the image details.
+     * 
+     * @return  void
+     */
+    public function edit()
     {
-        $data = array();
-        $this->template->add_package(array('ckeditor', 'ck_jq_adapter'));
-        $data['Image'] = $Image = $this->load->model('gallery_images_model');
-        $image_id = $this->uri->segment(5);
-        $Image->get_by_id($image_id);
-
-        if ( ! $Image->exists())
+        if(is_ajax())
         {
-            return show_404();
+            $Image = $this->load->model('gallery_images_model');
+            
+            // Setup our Ajax service for responses
+            $result = new Service_result();
+            
+            // Validate Form
+            $this->form_validation->set_rules('id', 'Id', "trim|required");
+            $this->form_validation->set_rules('title', 'Title', "trim|required");
+            $this->form_validation->set_rules('alt', 'Alternative Text', "trim");
+            $this->form_validation->set_rules('description', 'Description', 'trim');
+            $this->form_validation->set_rules('credits', 'Credits', 'trim');
+            $this->form_validation->set_rules('link', 'Link', 'trim');
+            $this->form_validation->set_rules('link_text', 'Link Text', 'trim');
+            $this->form_validation->set_rules('filename', 'filename', 'trim|required');
+            $this->form_validation->set_rules('hide', 'Hide', 'trim|integer');
+
+            if ($this->form_validation->run() == TRUE)
+            {
+                $ImageId = ($this->input->post('id') != '') ? $this->input->post('id') : NULL;
+                $Image->get_by_id($ImageId);
+                
+                if ($Image->exists())
+                {
+                    $Image->from_array($this->input->post()); 
+                    $Image->description = ($this->input->post('description') != '') ? $this->input->post('description') : NULL;
+                    $Image->credits     = ($this->input->post('credits') != '') ? $this->input->post('credits') : NULL;
+                    $Image->link        = ($this->input->post('link') != '') ? $this->input->post('link') : NULL;
+                    $Image->link_text   = ($this->input->post('link_text') != '') ? $this->input->post('link_text') : NULL;
+                    $Image->alt         = ($this->input->post('alt') != '') ? $this->input->post('alt') : NULL;
+                    $Image->hide        = ($this->input->post('hide')) ? 1 : 0;
+                    $status             = $Image->save();
+                    
+                    $result->status     = ($status) ? 'success' : 'error';
+                    $result->message    = ($status) ? 'Changes saved successfully' : 'Unable to save changes.';
+                    $result->result     = 0;
+                    
+                    $this->session->set_flashdata('message', 'Image saved successfully');
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                }
+                else 
+                {
+                    $result->status      = false;
+                    $result->message     = 'Image ID #'. $ImageId .' not found in the database';
+                    $result->result      = 0;
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                }
+            }
         }
-
-        $data['breadcrumb'] = set_crumbs(array('galleries' => 'Galleries', 'galleries/images/index/' . $Image->gallery_id => 'Images', current_url() => 'Image Edit'));
-        
-        // Validate Form
-        $this->form_validation->set_rules('title', 'Title', "trim|required");
-        $this->form_validation->set_rules('alt', 'Alternative Text', "trim");
-        $this->form_validation->set_rules('description', 'Description', 'trim');
-        $this->form_validation->set_rules('credits', 'Credits', 'trim');
-        $this->form_validation->set_rules('link', 'Link', 'trim');
-        $this->form_validation->set_rules('link_text', 'Link Text', 'trim');
-        $this->form_validation->set_rules('filename', 'filename', 'trim|required');
-        $this->form_validation->set_rules('hide', 'Hide', 'trim|integer');
-
-        if ($this->form_validation->run() == TRUE)
+        else 
         {
-            $Image->from_array($this->input->post()); 
-            $Image->description = ($this->input->post('description') != '') ? $this->input->post('description') : NULL;
-            $Image->credits = ($this->input->post('credits') != '') ? $this->input->post('credits') : NULL;
-            $Image->link = ($this->input->post('link') != '') ? $this->input->post('link') : NULL;
-            $Image->link_text = ($this->input->post('link_text') != '') ? $this->input->post('link_text') : NULL;
-            $Image->alt = ($this->input->post('alt') != '') ? $this->input->post('alt') : NULL;
-            $Image->hide = ($this->input->post('hide')) ? 1 : 0;
-            $Image->save();
-
-            $this->session->set_flashdata('message', '<p class="success">Image saved successfully.</p>');
-            redirect(ADMIN_PATH . '/galleries/images/index/'.$Image->gallery_id); 
+            show_error('As of version 1.3.0 only ajax calls are allowed to this method.');
         }
-
-        $_SESSION['KCFINDER'] = array();
-        $_SESSION['KCFINDER']['disabled'] = false;
-        $_SESSION['isLoggedIn'] = true;
-
-        $this->template->view('admin/images/edit', $data);
     }
 
-    function delete()
+    // -------------------------------------------------------------------
+    
+    /**
+     * 
+     * 
+     * @return  void
+     */
+    public function delete()
     {
         $this->load->model('gallery_images_model');
-
-        if ($this->input->post('selected'))
+        
+        if(is_ajax())
         {
-            $selected = $this->input->post('selected');
+            // Setup our Ajax service for responses
+            $result = new Service_result();
+
+            $image_id = (array) ($this->input->post('image_id')) ? $this->input->post('image_id') : null;
+            if ( ! is_null($image_id))
+            {
+                $Images = new Gallery_images_model();
+                $Images->where_in('id', $image_id)->get();
+                
+                if ($Images->exists())
+                {
+                    $status = $Images->delete_all();
+                }
+            
+                $message            = ($status) ? 'Images successfully deleted' : 'Unable to delete images';
+                $result->message    = $message;
+                $result->status     = ($status) ? 'success' : 'error';
+                
+                $this->session->set_flashdata('message', $message);
+            }
+            
+            header("Content-Type: application/json");
+            echo json_encode($result);
         }
-        else
+        else 
         {
-            $selected = (array) $this->uri->segment(5);
+            // show_error('As of version 1.3.0 only ajax calls are allowed to this method.');
+
+            if ($this->input->post('selected'))
+            {
+                $selected = $this->input->post('selected');
+            }
+            else
+            {
+                $selected = (array) $this->uri->segment(5);
+            }
+
+            $Images = new Gallery_images_model();
+            $Images->where_in('id', $selected)->get();
+
+            if ($Images->exists())
+            {
+                $Images->delete_all();
+
+                $this->session->set_flashdata('message', '<p class="success">The selected items were successfully deleted.</p>');
+            }
+
+            redirect(ADMIN_PATH . '/galleries/images/index/'.$this->uri->segment(5)); 
         }
-
-        $Images = new Gallery_images_model();
-        $Images->where_in('id', $selected)->get();
-
-        if ($Images->exists())
-        {
-            $Images->delete_all();
-
-            $this->session->set_flashdata('message', '<p class="success">The selected items were successfully deleted.</p>');
-        }
-
-        redirect(ADMIN_PATH . '/galleries/images/index/'.$this->uri->segment(5)); 
     }
+    
+    // -------------------------------------------------------------------
 
-    function order()
+    public function order()
     {
         // Order images
         if (is_ajax())
@@ -181,14 +244,26 @@ class Images extends Admin_Controller
             return show_404();
         }
     }
+    
+    // -------------------------------------------------------------------
 
-    function create_thumb()
+    /**
+     * Thumbnail creation method 
+     * 
+     * @return  void
+     */
+    public function create_thumb()
     {
+        $width  = segment(5);
+        $height = segment(6);
+        $width  = ( ! empty(segment(5))) ? segment(5) : 100;
+        $height = ( ! empty(segment(5)) && empty(segment(6))) ? $width : segment(6);
+        
         if (is_ajax())
         {
            if ($this->input->post('image_path'))
            {
-               echo image_thumb($this->input->post('image_path'), 100, 100);
+               echo image_thumb($this->input->post('image_path'), $width, $height);
            }
         }
         else

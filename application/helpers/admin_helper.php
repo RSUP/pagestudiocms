@@ -327,3 +327,35 @@ if ( ! function_exists('is_admin_nav_li_selected'))
         return FALSE;
     }   
 }   
+
+// --------------------------------------------------------------------
+    
+/**
+ * Returns part of the URI segment or a URL query parameter
+ * 
+ * Usage:
+ * 
+ *  {{ url:get segment="[int]" }} 
+ * 
+ *  {{ url:get param="[string]" }}
+ *
+ * @since      1.3.0
+ * @access     public 
+ * @return     string
+ */
+if ( ! function_exists('segment'))
+{
+    function segment($segment = null, $query = false)
+    {
+        if( ! is_null($segment))
+        {
+            return ci()->uri->segment($segment);
+        }
+        if( ! is_null($segment) && $query)
+        {
+            return ci()->input->get($segment);
+        }
+        
+        return FALSE;
+    }
+}

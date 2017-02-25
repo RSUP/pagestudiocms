@@ -1,15 +1,25 @@
-<div class="box">
-    <div class="heading">
-        <h1><img alt="" src="<?php echo theme_url('assets/images/banner.png'); ?>">Image Edit</h1>
+<!-- workspace -->
+<div class="edit-pane">
 
-        <div class="buttons">
-            <a class="button" href="#" onClick="$('#image_form').submit()"><span>Save</span></a>
-            <a class="button" href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Image->gallery_id); ?>"><span>Cancel</span></a>
-        </div>
-    </div>
-    <div class="content">
-
-        <div class="form">
+    <div id="editPane">
+        <section class="content-header">
+            <h1>
+                <i class="icon x32 icon-media"></i>
+                Image Edit
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <?php echo isset($breadcrumb) ? $breadcrumb : ''; ?>
+            </ol>
+            
+            <div class="buttons">
+                <a class="button" href="#" onClick="$('#image_form').submit()"><span>Save</span></a>
+                <a class="button" href="<?php echo site_url(ADMIN_PATH . '/galleries/images/index/' . $Image->gallery_id); ?>"><span>Cancel</span></a>
+            </div>
+        </section>
+        
+        <div class="row" style="padding:35px 25px">  
+        
             <?php echo form_open(null, 'id="image_form"'); ?>
             <div>
                 <?php echo form_label('<span class="required">*</span> Title:', 'title'); ?>
@@ -56,14 +66,20 @@
                 </span>
             </div>
 
-            <div class="clear"></div>
-
             <?php echo form_close(); ?>
-        </div>
-    </div>
-
+            
+        </div><!-- end padding -->
+    </div><!-- end edit-pane -->
 </div>
 
+<!-- right-pane -->
+<div class="options-pane">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            ...
+        </div>
+    </div>
+</div><!-- // Apps pane -->  
 <?php js_start(); ?>
 <script type="text/javascript">
     $(document).ready( function() {

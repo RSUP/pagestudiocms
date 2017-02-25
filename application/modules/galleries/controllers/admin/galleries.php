@@ -27,51 +27,88 @@ class Galleries extends Admin_Controller
         $this->template->view('admin/galleries/galleries', $data);
     }
 
-    function edit()
+    /**
+     * Methd to create and update a photo album
+     * 
+     * @return  void
+     */
+    public function edit()
     {
-        $data['breadcrumb'] = set_crumbs(array('galleries' => 'Galleries', current_url() => 'Gallery Edit'));
-
-        $data['Gallery'] = $Gallery = $this->load->model('galleries_model');
-        $data['edit_mode'] = $edit_mode = FALSE;
-        $gallery_id = $this->uri->segment(4);
-        $this->load->helper('file');
-
-        // Set Mode
-        if ($gallery_id)
+        if(is_ajax())
         {
-            $data['edit_mode'] = $edit_mode = TRUE;
-            $Gallery->get_by_id($gallery_id);
-
-            if ( ! $Gallery->exists()) 
+            $Gallery    = $this->load->model('galleries_model');
+            $edit_mode  = FALSE;
+            $gallery_id = ($this->input->post('id') !== '') ? $this->input->post('id') : NULL;
+            
+            // Setup our Ajax service for responses
+            $result = new Service_result();
+            
+            // Set Mode
+            if ( ! is_null($gallery_id))
             {
-                return show_404();
-            }
-        }
-        
-        // Validate Form
-        $this->form_validation->set_rules('title', 'Title', "trim|required");
+                $edit_mode = TRUE;
+                $Gallery->get_by_id($gallery_id);
 
-        if ($this->form_validation->run() == TRUE)
+                if ( ! $Gallery->exists()) 
+                {
+                    $result->message    = 'Unable to find album';
+                    header("Content-Type: application/json");
+                    echo json_encode($result);
+                    exit;
+                }
+            }
+            
+            // Validate Form
+            $this->form_validation->set_rules('title', 'Title', "trim|required");
+
+            if ($this->form_validation->run() == TRUE)
+            {
+                $posts = $this->input->post();
+                if (is_null($gallery_id)) {
+                    unset($posts['id']);
+                }
+                
+                $Gallery->from_array($posts);
+                $status = $Gallery->save();
+
+                if ($edit_mode)
+                {
+                    $message         = ($status) ? 'Changes saved successfully' : 'Unable to save changes';
+                    $result->message = $message;
+                    $result->status  = ($status) ? 'success' : 'error';
+                    $result->result  = ['redirect' => site_url(ADMIN_PATH . '/galleries')];
+                    $this->session->set_flashdata('message', $message);
+                }
+                else
+                {
+                    if ($status) 
+                    {
+                        $message         = 'Please add images to your album';
+                        $result->message = $message;
+                        $result->status  = 'success';
+                        $result->result  = ['redirect' => site_url(ADMIN_PATH . '/galleries/images/index/' . $Gallery->id)];
+                        $this->session->set_flashdata('message', $message);
+                    }
+                    else 
+                    {
+                        $message         = 'Unable to save changes';
+                        $result->message = $message;
+                        $this->session->set_flashdata('message', $message);
+                    }
+                }
+            }
+            
+            header("Content-Type: application/json");
+            echo json_encode($result);
+            exit;
+        }
+        else 
         {
-            $Gallery->from_array($this->input->post());
-            $Gallery->save();
-
-            if ($edit_mode)
-            {
-                $this->session->set_flashdata('message', '<p class="success">Gallery saved successfully.</p>');
-                redirect(ADMIN_PATH . '/galleries'); 
-            }
-            else
-            {
-                redirect(ADMIN_PATH . '/galleries/images/index/' . $Gallery->id); 
-            }
+            show_error('As of version 1.3.0 only ajax calls are allowed to this method.');
         }
-
-
-        $this->template->view('admin/galleries/edit', $data);
     }
 
-    function delete()
+    public function delete()
     {
         if ($this->input->post('selected'))
         {
@@ -94,8 +131,24 @@ class Galleries extends Admin_Controller
             }
 
             $this->session->set_flashdata('message', '<p class="success">Gallery was deleted successfully.</p>');
-        }
 
+            if(is_ajax())
+            {
+                // Setup our Ajax service for responses
+                $result = new Service_result();
+                
+                $message         = 'Album was deleted successfully';
+                $result->message = $message;
+                $result->status  = 'success';
+                $result->result  = ['redirect' => site_url(ADMIN_PATH . '/galleries')];
+                $this->session->set_flashdata('message', $message);
+                
+                header("Content-Type: application/json");
+                echo json_encode($result);
+                exit;
+            }
+        }
+        
         redirect(ADMIN_PATH . '/galleries'); 
     }
 }

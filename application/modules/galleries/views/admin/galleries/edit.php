@@ -1,24 +1,42 @@
-<div class="box">
-    <div class="heading">
-        <h1><img alt="" src="<?php echo theme_url('assets/images/banner.png'); ?>"> <?php echo ($edit_mode) ? 'Edit' : 'Add' ?> Gallery</h1>
+<!-- workspace -->
+<div class="edit-pane">
 
-        <div class="buttons">
-            <a class="button" href="#" onClick="$('#galleries_form').submit();"><span>Save</span></a>
-        </div>
-    </div>
-    <div class="content">
+    <div id="editPane">
+        <section class="content-header">
+            <h1>
+                <i class="icon x32 icon-media"></i>
+                <?php echo ($edit_mode) ? 'Edit' : 'Add' ?> Gallery
+                <small>Control panel</small>
+            </h1>
+            <ol class="breadcrumb">
+                <?php echo isset($breadcrumb) ? $breadcrumb : ''; ?>
+            </ol>
+            
+            <div class="buttons">
+                <a class="button" href="#" onClick="$('#galleries_form').submit();"><span>Save</span></a>
+            </div>
+        </section>
+        
+        <br />                            
+        
+        <div class="row" style="padding:25px 25px">
 
-        <?php echo form_open(null, 'id="galleries_form"')?>
+            <?php echo form_open(null, 'id="galleries_form"')?>
 
-        <div class="form">
-            <div>
                 <?php echo form_label('Title:', 'title')?>
                 <?php echo form_input(array('name' => 'title', 'value' => set_value('title', isset($Gallery->title) ? $Gallery->title : '')))?>
-            </div>
-        </div>
 
-        <div class="clear"></div>
+            <?php echo form_close(); ?>
 
-        <?php echo form_close(); ?>
-    </div>
+        </div><!-- end padding -->
+    </div><!-- end edit-pane -->
 </div>
+
+<!-- right-pane -->
+<div class="options-pane">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12">
+            ...
+        </div>
+    </div>
+</div><!-- // Apps pane -->  

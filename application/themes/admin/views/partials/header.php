@@ -6,13 +6,11 @@
     
     <?php echo $this->template->metadata(); ?>
     
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    
     <!--stylesheets
 	============================================= -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="<?php echo theme_url('assets/css/plugins/smoke/smoke.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo theme_url('assets/css/ui-icons.css'); ?>" media="screen" rel="stylesheet">
     <link href="<?php echo theme_url('assets/css/pe-icon-7-stroke.css'); ?>" media="screen" rel="stylesheet">
@@ -29,14 +27,15 @@
         var ADMIN_URL = '<?php echo site_url(ADMIN_PATH); ?>';
         var THEME_URL = '<?php echo theme_url(); ?>';
     </script>
-    
-    <!-- Controller Defined JS Files -->
-    <?php echo $this->template->javascripts(); ?>
 
-    <script src="<?php echo theme_url('assets/js/main.js'); ?>"></script>
     <script src="<?php echo theme_url('assets/js/modernizr.custom.js'); ?>"></script> <!-- Modernizr -->
     
-    <script type="text/javascript" src="<?php echo theme_url('assets/js/helpers.js'); ?>"></script>
+    <!-- Favicons
+	================================================== -->
+	<link rel="shortcut icon" href="">
+	<link rel="apple-touch-icon" href="">
+	<link rel="apple-touch-icon" sizes="72x72" href="">
+	<link rel="apple-touch-icon" sizes="114x114" href="">
 
 </head>
 <body <?php 
@@ -45,52 +44,41 @@
     }
 ?>>
 <?php if ($this->secure->is_auth()): ?>
-
-	<header class="cd-main-header">
-		<a href="#0" class="cd-logo"><img src="<?php echo theme_url('assets/img/cd-logo.svg'); ?>" alt="Logo"></a>
-        
-        <div class="breadcrumb">
-            <ul><?php echo isset($breadcrumb) ? $breadcrumb : ''; ?></ul>
-        </div>
-
-		<a href="#0" class="cd-nav-trigger">Menu<span></span></a>
-
-		<nav class="cd-nav">
-			<ul class="cd-top-nav">
-				<li><a class="settings-icon" target="_blank" href="<?php echo site_url(); ?>"><i class="fa fa-eye"></i>&nbsp;<span>Visit Site</span></a></li>
-				<li><a class="settings-icon" href="<?php echo site_url(ADMIN_PATH .'/settings/general-settings'); ?>" title="Settings"><i class="fa fa-cog">&nbsp;</i><span>Settings</span></a></li>
-			</ul>
-		</nav>
-	</header> <!-- .cd-main-header -->
+<div class="hidden">
+    <nav class="cd-nav">
+        <ul class="cd-top-nav">
+            <li><a class="settings-icon" target="_blank" href="<?php echo site_url(); ?>"><i class="fa fa-eye"></i>&nbsp;<span>Visit Site</span></a></li>
+            <li><a class="settings-icon" href="<?php echo site_url(ADMIN_PATH .'/settings/general-settings'); ?>" title="Settings"><i class="fa fa-cog">&nbsp;</i><span>Settings</span></a></li>
+        </ul>
+    </nav>
 
 	<main class="cd-main-content">
-        <!-- /menu profile quick info -->
-		<nav class="cd-side-nav">
-            <!-- menu profile quick info -->            
-            <ul class="profile-dropdown">
-              <li>
-                <a href="javascript:void(0)" class="js-accordion-trigger">
-                <div class="profile clearfix">
-                  <div class="profile_pic">
-                    <img src="<?php echo (isset($this->secure->get_user_session()->photo)) ? site_url() . $this->secure->get_user_session()->photo : site_url() . ADMIN_NO_IMAGE;?>" alt="..." class="img-circle profile_img">
-                  </div>
-                  <div class="profile_info">
-                    <span>Welcome,</span>
-                    <h2><?php echo $this->secure->get_user_session()->first_name; ?></h2>
-                  </div>
-                </div>
-                </a>
-                <ul class="submenu">
-                    <li><a href="<?php echo site_url(ADMIN_PATH . '/users/edit') .'/'. $this->secure->get_user_session()->id;?>">Edit Account</a></li>
-                    <li><a href="<?php echo site_url('users/logout'); ?>" title="Logout">Logout</a></li>
-                </ul>
-              </li>              
-            </ul>
 
+    <div class="profile clearfix">
+      <div class="profile_pic">
+        <img src="<?php echo (isset($this->secure->get_user_session()->photo)) ? site_url() . $this->secure->get_user_session()->photo : site_url() . ADMIN_NO_IMAGE;?>" alt="..." class="img-circle profile_img">
+      </div>
+      <div class="profile_info">
+        <span>Welcome,</span>
+        <h2><?php echo $this->secure->get_user_session()->first_name; ?></h2>
+      </div>
+    </div>
+
+    <li><a href="<?php echo site_url(ADMIN_PATH . '/users/edit') .'/'. $this->secure->get_user_session()->id;?>">Edit Account</a></li>
+    <li><a href="<?php echo site_url('users/logout'); ?>" title="Logout">Logout</a></li>
+</div>
+
+<!-- ======================================================================================== -->
+
+<!-- ======================================================================================== -->
+
+    <div class="wrapper">
+        <!-- Add class .open-options-pane to open options-pane -->
+        <!-- Add class .collapse-options-pane to close options-pane -->
+        <?php $open_left_page = true; ?>
+        <?php $open_options_page = false; ?>
+        <div class="workspace <?php echo ($open_left_page) ? 'open-left-pane ' : ''; echo ($open_options_page) ? 'open-options-pane ' : '';?>">
+        
             <?php echo theme_partial('main-navigation'); ?>
-		</nav>
 
-		<div class="content-wrapper">    
-            
-            <div id="container">
 <?php endif; ?>
