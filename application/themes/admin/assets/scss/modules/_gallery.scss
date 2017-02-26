@@ -104,6 +104,10 @@
         font-size: 12px;
         padding: 10px;
         color: #a1a1a1;
+        width: 220px; 
+        white-space: nowrap; 
+        overflow: hidden; 
+        text-overflow: ellipsis;
         h2 {
           font-size: 18px;
           line-height: 26px;
