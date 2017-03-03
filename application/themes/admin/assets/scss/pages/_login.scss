@@ -1,0 +1,76 @@
+body, html {
+  height: 100%;
+}
+body {
+  &.admin-login-page {
+    background-color: #fcfcfc;
+  }
+}
+.login-wrapper {
+  .login-form-wrapper {
+    @media (min-width: $screen-sm) {
+      width: 348px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .admin-login-form {
+    
+    }
+    
+    .form-group {
+      input[type="email"], 
+      input[type="text"], 
+      input[type="password"] {
+        height: 50px; 
+        @include box-shadow(0, 0, 0, 0);
+      }
+    }
+  }
+
+  @media (min-width: $screen-md) {
+    height: inherit;
+    overflow: hidden;
+
+    .container-fluid {
+      height: 100%;
+      .row {
+        height: inherit;
+      }
+    }
+  }
+  
+  .row-table {
+    .login-page-form-column {
+      // background-image: url('../img/1511.jpg');
+      background-position: bottom right;
+      background-repeat: no-repeat;
+      background-color: #fcfcfc;
+    }
+
+    .login-page-cta-column {
+      // border: 1px solid red;
+      background-image: url('../img/6452.jpg');
+    }
+    
+    @media (min-width: $screen-md) {
+      display: table;
+      width: 100%;
+      height: inherit;
+      .login-page-form-column,
+      .login-page-cta-column {
+        display: table-cell;
+        float: none;
+        height: 100%;
+        vertical-align: middle;
+      }
+    }
+  }
+  
+  .error {
+    background-color: #fce0d8;
+    border: 1px solid #f6a08a;
+    color: #f0603b;
+    font-size: 12px;
+    padding: 10px 25px;
+  }
+}

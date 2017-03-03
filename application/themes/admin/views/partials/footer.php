@@ -10,7 +10,7 @@
     </div>
     <?php endif; ?>
     <!-- -->
-    <div id="ajax_status">
+    <div id="ajax_status" class="hidden">
         <table id="ajax_status_frame">
             <tr>
                 <td>

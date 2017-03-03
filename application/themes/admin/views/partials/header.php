@@ -10,7 +10,7 @@
 	============================================= -->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css"> -->
     <link href="<?php echo theme_url('assets/css/plugins/smoke/smoke.min.css'); ?>" rel="stylesheet">
     <link href="<?php echo theme_url('assets/css/ui-icons.css'); ?>" media="screen" rel="stylesheet">
     <link href="<?php echo theme_url('assets/css/pe-icon-7-stroke.css'); ?>" media="screen" rel="stylesheet">
@@ -40,7 +40,7 @@
 </head>
 <body <?php 
     if ($this->template->segment(3) === 'login' || $this->template->segment(3) === 'forgot-password') {
-        echo 'class="login"';
+        echo 'class="admin-login-page"';
     }
 ?>>
 <?php if ($this->secure->is_auth()): ?>
