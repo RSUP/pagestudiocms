@@ -47,7 +47,7 @@ class MY_Loader extends MX_Loader
         require_once APPPATH ."core/MY_Model.php";
         
         if(is_null($path)) {
-            show_error('The model path for "'.$model.'" cannot be left to EMPTY. Error triggered in '.APPPATH.'core/MY_Loader.php line 45');
+            show_error('The model path for "'.$model.'" cannot be left to EMPTY. Error triggered in '.APPPATH.'core/MY_Loader.php line ' . __LINE__);
         }
         else 
         {
