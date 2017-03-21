@@ -1,0 +1,63 @@
+.tabs {
+  &.ui-tabs {
+    > .ui-tabs-panel {
+      padding: 0;
+    }
+  } 
+}
+
+#content-tab {
+  // margin: -16px -10px -10px;
+  background-color: #FAFAFA;
+}
+#entry_fields {
+  > div {
+    > label {
+      display: block;
+      width: auto;
+      font-weight: bold;
+      background: url("../images/box.png") repeat-x scroll 0 0 transparent;
+      border-top: 1px solid #DBDBDB;
+      padding: 10px;
+      .arrow {
+        display: inline-block;
+        zoom: 1;
+        vertical-align: middle;
+        width: 8px;
+        height: 8px;
+        background: url("../images/arrows_black.png") no-repeat bottom center;
+        margin-right: 3px;
+      }
+      .arrow_collapse {
+        background-position: top center;
+      }
+    }
+    span label {
+      padding: 3px 0;
+    }
+    border: 0;
+    padding: 0;
+    > div {
+      border: 0;
+      padding: 15px 10px;
+    }
+  }
+  input[type=text], 
+  textarea {
+    padding: 8px 10px;
+    border: 1px solid #CCCCCC;
+    width: 100%;
+    border-radius: 2px;
+  }
+  select {
+    min-width: 200px;
+    padding: 5px;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+  }
+  input[type=text]:focus, 
+  select:focus, 
+  textarea:focus {
+    // border: 2px solid #CCCCCC;
+  }
+}

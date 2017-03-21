@@ -2,3 +2,11 @@
 a, a.current, a.active, a:active {
     outline: 0 !important;
 }
+
+code,
+.code {
+  color: #E74C3C;
+  border-radius: 1px;
+  background: #fff;
+  border: solid 1px #e1e4e5;
+}

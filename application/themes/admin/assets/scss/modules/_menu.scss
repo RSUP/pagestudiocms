@@ -176,45 +176,70 @@
             position: relative;
             border-bottom: 0;
             &:hover {
-                > a, > i {
-                    color: $brand-link-color;
+              > a, 
+              > i {
+                color: $brand-link-color;
+              }
+              > .nav-sub__config {
+                &.nav-sub__config--visible-on-hover {
+                  display: inline-block !important;
                 }
+              }
             }
             > a {
-                font-size: 14px;
-                padding: 5px 10px 5px 20px;
-                display: block;
-                color: #7d7d7d;
-                // margin-right: -30px;
-                
-                &:hover {
-                  // color: $brand-link-color;
-                    background: none;
-                    text-decoration: none;
+              font-size: 13px;
+              padding: 5px 10px 5px 20px;
+              display: block;
+              color: #7d7d7d;
+              // margin-right: -30px;
+              i {
+                font-size: 16px;
+                margin-right: 10px;
+                &.fa-plus {
+                  font-size: 14px;
                 }
+              }
+              &:hover {
+                // color: $brand-link-color;
+                background: none;
+                text-decoration: none;
+              }
             }
             > span {
                 padding: 5px 10px;
                 display: block;
-                color: #743a6a;
+                color: $brand-link-color;
                 // margin-right: -30px;
             }
             > .nav-sub__config {
-                position: absolute;
-                right: 0px;
-                top: 0;
-                // padding: 5px 0px;
-                margin: 0;
-                text-align: center;
-                color: #7d7d7d;
-                
-                &:hover {
-                    // color: $brand-link-color;
+              position: absolute;
+              right: 0px;
+              top: 0;
+              margin: 0;
+              color: #7d7d7d;
+              text-align: center;
+              cursor: pointer;
+              border: 1px solid transparent;
+              
+              i {
+                font-size: 13px;
+                color: #000;
+              }
+              &:hover {
+                // color: $brand-link-color;
+                i {
+                  color: #000;
                 }
-                &.active {
-                    background: #fff;
-                    color: #c9c9c9;
-                }
+                border-color: #f1f1f1;
+                background: #f8f8f8;
+              }
+              &.nav-sub__config--visible-on-hover {
+                display: none;
+              }
+              &.active {
+                background: #fff;
+                color: #c9c9c9;
+              }
             }
             &.spacer {
               // border-bottom: 1px solid #E5E5E5;
@@ -223,20 +248,24 @@
             }
             &.line {
               border-bottom: 1px solid #E5E5E5;
-              margin-top: 8px;
-              margin-bottom: 8px;
+              margin-top: 10px;
+              margin-bottom: 10px;
+            }
+            &.description {
+              font-size: 80%;
+              padding: 5px 10px 0px 20px;
             }
             &.heading {
-                position: relative;
-                margin-bottom: 10px;
-                padding: 25px 10px 5px 20px;
-                color: #313131;
-                font-size: 16px;
-                text-transform: normal;
-                
-                > .nav-sub__config {
-                  top: 20px;
-                }
+              position: relative;
+              margin-bottom: 10px;
+              padding: 25px 10px 5px 20px;
+              color: #313131;
+              font-size: 16px;
+              text-transform: normal;
+              
+              > .nav-sub__config {
+                top: 20px;
+              }
             }
             &.sub-heading {
               color: #313131;
@@ -244,6 +273,10 @@
               font-weight: bold;
               text-transform: uppercase;
               padding: 25px 10px 5px 20px;
+              
+              &.sub-heading__line-before {
+                padding: 5px 10px 5px 20px;
+              }
             }
             // &.single {
                 // padding: 30px 10px 5px;
@@ -288,12 +321,32 @@
                 // font-size: 14px;
             // }
             &.menu-widget {
-                padding: 10px;
+              padding: 10px;
             }
             
             &.tree {
-                padding-left: 5px;
-                padding-right: 5px;
+              padding-left: 5px;
+              padding-right: 5px;
+            }
+            
+            &.site-pages-tree {
+              margin-bottom: 10px;
+              a { 
+                &::before {
+                  font-family: FontAwesome;
+                  content: "\f016"; // fa-file-o
+                  margin-right: 10px;
+                }
+              }
+              > .nav-title {
+                &::before {
+                  font-family: FontAwesome;
+                  content: "\f0e8";
+                  margin-right: 10px;
+                }
+                // color: #F00;
+                margin-left: 15px;
+              }
             }
         } // li
         

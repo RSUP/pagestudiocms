@@ -26,10 +26,15 @@
       margin: 0;
       font-size: 18px;
       > small {
+        display: block;
         font-size: 14px;
         font-weight: 300;
-        display: block;
-        padding-left: 40px;
+        margin-top: 6px;
+      }
+      &.with-icon {
+        > small {
+          padding-left: 40px;
+        }
       }
     }
     > .breadcrumb {
@@ -40,7 +45,7 @@
       margin-bottom: 0;
       padding: 7px 5px;
       position: absolute;
-      top: 15px;
+      top: 12px;
       right: 10px;
       @include border-radius(2px);
     }
