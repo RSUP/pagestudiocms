@@ -133,6 +133,15 @@ $packages = array(
             '/application/themes/admin/assets/js/jquery.tools.min.js',
         ),
     ),
+    'dataTables' => array(
+        'javascript' => array(
+            '/application/themes/admin/assets/js/plugins/dataTables/dataTables.bootstrap.js',
+            '/application/themes/admin/assets/js/plugins/dataTables/jquery.dataTables.js',
+        ),
+        'stylesheet' => array(
+            '/application/themes/admin/assets/css/plugins/dataTables/dataTables.bootstrap.css',
+        ),
+    ),
     'labelify' => array(
         'javascript' => array(
             '/application/themes/admin/assets/js/jquery.labelify.js',

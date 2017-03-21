@@ -40,6 +40,7 @@ class Navigations_library
         $this->max_depth = 0;
         $this->backspace = 0;
         $this->_content = '';
+        $this->link_after = '';     // Add html after <a> tag 
 
         // Breadcrumb only parameters
         $this->breadcrumb_seperator = null;
@@ -301,7 +302,7 @@ class Navigations_library
     /*
      * Set Current
      *
-     * Finds and identifies via URL the current navigaiton item
+     * Finds and identifies via URL the current navigation item
      *
      * @access protected
      * @param array
@@ -616,6 +617,45 @@ class Navigations_library
     // ------------------------------------------------------------------------
     
     /**
+     * Retrieves all the navigations from the database and builds multiple 
+     * unordered lists.
+     * 
+     * @since   Version 1.4.0
+     * @param   array $config
+     * @return  string
+     */
+    public function list_navs($config = [])
+    {
+        $navigations = '';
+        
+        $navigations_model = ci()->load->ext_model('navigations_model', APPPATH . 'modules/navigations/models');
+        $navs = $navigations_model->get_navs();
+        
+        if( ! empty($navs))
+        {
+            foreach($navs as $obj => $nav){
+                $navigations .= '<li class="site-pages-tree"><span class="nav-title">' . $nav->title 
+                    . '</span> <span class="nav-sub__config js-add-edit-navigation-trigger" data-nav-id="'.$nav->id.'" data-nav-title="'.$nav->title.'" data-toggle="tooltip" title="Edit"><i class="fa fa-cog"></i></span>';
+                $navigations .= $this->list_nav([
+                    'id' => $nav->id,
+                    'class' => 'tree',
+                ]);
+                $navigations .= '</li>';
+            }
+        }
+        else 
+        {
+            $navigations = '<li class="js-default-navigation">
+                <a href="#" class="js-add-edit-navigation-trigger"><i class="fa fa-plus"></i> Add Navigation</a> </a>
+            </li>';
+        }
+        
+        return $navigations;
+    }
+    
+    // ------------------------------------------------------------------------
+    
+    /**
      * Bootstrap Navbar and dropdowns 
      *
      * Builds Bootstrap 3.5+ navigation HTML markup
@@ -891,7 +931,13 @@ class Navigations_library
             {
                 $the_url = ($Item->url == 'home') ? '/' : $Item->url;
                 $the_url = (($Item->type == 'page' || $Item->type == 'dynamic_route') ? site_url($the_url) : $the_url);
-                $nav .= '<a ' . (($Item->target) ? 'target="' . $Item->target . '"': '') . ' href="' . $the_url . '">' . $Item->title . '</a>';
+                $nav .= '<a ' 
+                    . (($Item->target) ? 'target="' . $Item->target . '"': '') 
+                    . ' id="' . $Item->id . '"'
+                    . ' href="' . $the_url . '"'
+                    . (($Item->id) ? ' data-nav-id="' . $Item->id . '"': '')
+                    . (($Item->entry_id) ? ' data-entry-id="' . $Item->entry_id . '"': '')
+                    . '>' . $Item->title . '</a>';
             }
 
             // Check if subnav visibility overridden by parameter else use default settings

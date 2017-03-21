@@ -16,7 +16,7 @@ class Entries extends Admin_Controller {
 
      * @return void
      */
-	function index()
+	public function index()
 	{
         $data = array();
         $data['breadcrumb'] = set_crumbs(array(current_url() => 'Entries'));
@@ -116,8 +116,9 @@ class Entries extends Admin_Controller {
         $config['num_links'] = 5;
         $config['suffix'] = $data['query_string'];
         $this->pagination->initialize($config); 
-
-
+        
+        // $data['open_options_page'] = true;
+        $this->template->add_package(['dataTables']);
         $this->template->view('admin/entries/entries', $data);
 	}
 

@@ -12,4 +12,16 @@ class Navigations_model extends DataMapper
             'model_path' => 'application/modules/navigations',
         ),
     );
+    
+    /**
+     * 
+     * 
+     * @param   [in] $filter 
+     * @return  void
+     */
+    public function get_navs($filter = null)
+    {
+        $result = $this->db->get('navigations')->result();
+        return $result;
+    }
 }

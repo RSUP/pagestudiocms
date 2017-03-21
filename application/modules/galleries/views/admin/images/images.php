@@ -324,19 +324,6 @@
                 width : '550px',
                 height : '120px'
             };
-            
-            var thin_config = {
-                toolbar : [
-                    { 
-                        name: 'basicstyles', 
-                        items: [ 'Format','Bold','Italic','-','NumberedList','BulletedList','-','Link','Unlink','-','Source' ]
-                    }
-                ],
-                entities : false,
-                resize_maxWidth : '400px',
-                width : '550px',
-                height : '120px'
-            };
 
             $('textarea#description').ckeditor(thin_config);
             CKEDITOR.instances['description'].updateElement(); // Ensures that the textarea is updated with new content

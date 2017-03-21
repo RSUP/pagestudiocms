@@ -28,6 +28,7 @@
         ?>">
 			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-pages"><i class="icon flat icon-pages"></i></a>
 		</li>
+        <!--
 		<li class="">
 			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-posts"><i class="icon flat icon-plus-circle-o"></i></a>
 		</li>
@@ -35,12 +36,21 @@
 			<a aria-expanded="false" data-toggle="tab" href="#"><i class="icon flat icon-comment-o"></i></a>
 		</li>
 		<li class="">
-			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-users"><i class="icon flat icon-user"></i></a>
-		</li>
-		<li class="">
 			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-calendar"><i class="icon flat icon-calendar-o"></i></a>
 		</li>
-		<li class="">
+        -->
+		<li class="first <?php if(segment(2) == 'users') echo 'active'; ?>">
+			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-users"><i class="icon flat icon-user"></i></a>
+		</li>
+        <li class="">
+			<a aria-expanded="false" href="<?php echo site_url(); ?>" target="_blank"><i class="pe-7s-look"></i></a>
+		</li>
+		<li class="<?php 
+            switch (segment(2)) {
+                case 'settings' : 
+                    echo 'active';
+            }
+        ?>">
 			<a aria-expanded="false" data-toggle="tab" href="#nav-sub-settings"><i class="icon flat icon-cog-o"></i></a>
 		</li>
 	</ul>

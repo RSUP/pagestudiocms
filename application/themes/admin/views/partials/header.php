@@ -75,8 +75,8 @@
     <div class="wrapper">
         <!-- Add class .open-options-pane to open options-pane -->
         <!-- Add class .collapse-options-pane to close options-pane -->
-        <?php $open_left_page = true; ?>
-        <?php $open_options_page = false; ?>
+        <?php $open_left_page = (isset($open_left_page)) ? $open_left_page : true; ?>
+        <?php $open_options_page = (isset($open_options_page)) ? $open_options_page : false; ?>
         <div class="workspace <?php echo ($open_left_page) ? 'open-left-pane ' : ''; echo ($open_options_page) ? 'open-options-pane ' : '';?>">
         
             <?php echo theme_partial('main-navigation'); ?>
